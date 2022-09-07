@@ -2,21 +2,87 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title></title>
+    <title>Sign up</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <h1>Sign Up</h1>
-    <form action="/create-user" method="POST">
-      <label for="firstname">First name</label>
-      <input name="firstname" placeholder="firstname" type="text" />
-      <label for="lastname">Username</label>
-      <input name="lastname" placeholder="lastname" type="text" />
-      <label for="username">Username</label>
-      <input name="username" placeholder="username" type="text" />
-      <label for="password">Password</label>
-      <input name="password" type="password" />
-      <button>Sign Up</button>
-    </form>
-    <a href="/login">Already a member? log in</a>
+    <div class="container">
+      <form method="POST" action="/create-user" class="form">
+        <h2>Sign up today!</h2>
+        <div class="form-control">
+          <label for="firstname">First name</label>
+          <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            placeholder="Enter first name"
+          />
+          <% if(errors.some(err => err.param === 'firstname')) { %>
+          <small class="error"
+            ><%= errors.find(err => err.param === 'firstname').msg%></small
+          >
+          <% } %>
+        </div>
+        <div class="form-control">
+          <label for="lastname">Last name</label>
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            placeholder="Enter last name"
+          />
+          <% if(errors.some(err => err.param === 'lastname')) { %>
+          <small class="error"
+            ><%= errors.find(err => err.param === 'lastname').msg %></small
+          >
+          <% } %>
+        </div>
+        <div class="form-control">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+          />
+          <% if(errors.some(err => err.param === 'username')) { %>
+          <small class="error"
+            ><%= errors.find(err => err.param === 'username').msg %></small
+          >
+          <% } %>
+        </div>
+        <div class="form-control">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+          />
+          <% if(errors.some(err => err.param === 'password')) { %>
+          <small class="error"
+            ><%= errors.find(err => err.param === 'password').msg %></small
+          >
+          <% } %>
+        </div>
+        <div class="form-control">
+          <label for="confirm-password">Confirm password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            placeholder="Confirm password"
+          />
+          <% if(errors.some(err => err.param === 'confirm-password')) { %>
+          <small class="error"
+            ><%= errors.find(err => err.param === 'confirm-password').msg
+            %></small
+          >
+          <% } %>
+        </div>
+        <button>Submit</button>
+      </form>
+      <a href="/login" class="log-in">Already have an account? Log in here</a>
+    </div>
   </body>
 </html>

@@ -2,8 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var crypto = require('crypto');
-
-var router = express.Router();
+var bcrypt = require('bcryptjs');
 
 passport.use(
   new LocalStrategy((username, password, done) => {
@@ -14,10 +13,13 @@ passport.use(
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
-      if (user.password !== password) {
-        return done(null, false, { message: 'Incorrect password' });
-      }
-      return done(null, user);
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (res) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: 'Incorrect password' });
+        }
+      });
     });
   })
 );
@@ -32,16 +34,10 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-router.get('/login', function (req, res, next) {
-  res.render('login');
-});
-
-router.post(
-  '/login/password',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-  })
-);
-
-module.exports = router;
+exports.login_user = (req, res) => {
+  '/login',
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+    });
+};
