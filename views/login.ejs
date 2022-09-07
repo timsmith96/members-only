@@ -2,34 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Sign up</title>
+    <title>Log in</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <div class="container">
-      <form method="POST" action="/login" class="form">
-        <h2>Welcome back!</h2>
-        <div class="form-control">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Enter username"
-          />
-        </div>
-        <div class="form-control">
-          <label for="password">Password</label>
-          <input
-            type="text"
-            id="password"
-            name="password"
-            placeholder="Enter password"
-          />
-        </div>
-        <button>Login</button>
-      </form>
-      <a href="/" class="log-in">Don't have an account? Create one here</a>
+    <header><%- include('./partials/header'); %></header>
+    <div class="body">
+      <div class="container">
+        <form method="POST" action="/login" class="form">
+          <h2>Hello! Please log in:</h2>
+          <div class="form-control">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Enter username"
+            />
+            <% if(messages) { %>
+            <small class="error"
+              ><%= messages.find(msg => msg.includes('username'))%></small
+            >
+            <% } %>
+          </div>
+          <div class="form-control">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+            />
+            <% if(messages) { %>
+            <small class="error"
+              ><%= messages.find(msg => msg.includes('password'))%></small
+            >
+            <% } %>
+          </div>
+          <button>Login</button>
+        </form>
+        <a href="/index" class="log-in"
+          >Don't have an account? Create one here</a
+        >
+      </div>
     </div>
   </body>
 </html>

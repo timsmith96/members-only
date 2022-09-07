@@ -1,8 +1,10 @@
 var express = require('express');
+const router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var crypto = require('crypto');
 var bcrypt = require('bcryptjs');
+const User = require('../models/user');
 
 passport.use(
   new LocalStrategy((username, password, done) => {
@@ -11,7 +13,7 @@ passport.use(
         return done(err);
       }
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
+        return done(null, false, { message: 'username not found' });
       }
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
@@ -34,10 +36,13 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-exports.login_user = (req, res) => {
+router.post(
   '/login',
-    passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-    });
-};
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureMessage: true,
+  })
+);
+
+module.exports = router;

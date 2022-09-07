@@ -1,7 +1,9 @@
 var express = require('express');
 path = require('path');
-var bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
+const authRouter = require('./controllers/authController');
+const passport = require('passport');
+const session = require('express-session');
 require('dotenv').config();
 
 const app = express();
@@ -16,7 +18,11 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', indexRouter);
+app.use('/', authRouter);
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));

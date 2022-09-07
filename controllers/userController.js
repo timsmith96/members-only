@@ -41,13 +41,14 @@ exports.create_user_post = [
         res.render('index', {
           firstname: req.body.firstname,
           errors: errors.array(),
+          title: 'Sign up',
         });
       } else {
         user.save((err) => {
           if (err) {
             return next(err);
           }
-          res.redirect('/');
+          res.redirect('/login');
         });
       }
     });
