@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+  <header><%- include('./partials/header'); %></header>
+  <body>
+    <main class="body">
+      <% if(!user) {%>
+      <h1>Hi, you must be <a href="/login">logged in</a> to view this page!</h1>
+      <%} else { %>
+      <form method="POST" action="/admin" class="admin-form">
+        <% if(user.admin) {%>
+        <h1>Hello, admin :)</h1>
+        <a href="/">Home</a>
+        <%} else {%>
+        <h1>Hello, potential admin. What is the password?</h1>
+        <input type="text" name="admin-password" placeholder="enter password" />
+        <% if(errors.some(err => err.param === 'admin-password')) { %>
+        <small class="error"
+          ><%= errors.find(err => err.param === 'admin-password').msg%></small
+        >
+        <% } %>
+        <button type="submit">Submit</button>
+        <% if(user) { %> <% } %> <%}%>
+      </form>
+      <%}%>
+    </main>
+  </body>
+</html>

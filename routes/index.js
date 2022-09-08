@@ -31,10 +31,13 @@ router.get('/create-message', (req, res, next) => {
     errors: [],
   });
 });
-router.get('/test', (req, res) => res.render('test', { user: req.user }));
+router.get('/admin', (req, res) =>
+  res.render('admin', { title: 'Admin', user: req.user, errors: [] })
+);
 
 // POST REQUESTS
 router.post('/create-user', user_controller.create_user_post);
 router.post('/create-message', message_controller.create_message_post);
+router.post('/admin', user_controller.admin_post);
 
 module.exports = router;

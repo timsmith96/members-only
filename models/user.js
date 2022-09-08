@@ -7,6 +7,7 @@ const UserSchema = new Schema({
   lastname: { type: String, required: true, maxLength: 20 },
   username: { type: String, required: true, maxLength: 20 },
   password: { type: String, required: true },
+  admin: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('User', UserSchema);

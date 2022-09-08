@@ -55,3 +55,63 @@ exports.create_user_post = [
     });
   },
 ];
+
+// exports.admin_post = [
+//   body('admin-password', 'password required please').isLength({ min: 1 }),
+//   async (req, res, next) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       res.render('admin', {
+//         title: 'Admin',
+//         user: req.user,
+//         errors: errors.array(),
+//       });
+//     } else {
+//       if (req['body']['admin-password'] == 'reptileman123') {
+//         const doc = await User.findById(req.user.id);
+//         doc.admin = true;
+//         await doc.save();
+//         res.render('admin', {
+//           title: 'Admin',
+//           user: doc,
+//           errors: errors.array(),
+//         });
+//       } else {
+//         res.render('admin', {
+//           title: 'Admin',
+//           user: req.user,
+//           errors: errors.array(),
+//         });
+//       }
+//     }
+//   },
+// ];
+
+exports.admin_post = [
+  body('admin-password', 'password required please').isLength({ min: 1 }),
+  body('admin-password').custom((value, { req }) => {
+    if (value !== 'reptileman123') {
+      throw new Error('sorry - that password is incorrect');
+    }
+    return true;
+  }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render('admin', {
+        title: 'Admin',
+        user: req.user,
+        errors: errors.array(),
+      });
+    } else {
+      const doc = await User.findById(req.user.id);
+      doc.admin = true;
+      await doc.save();
+      res.render('admin', {
+        title: 'Admin',
+        user: doc,
+        errors: errors.array(),
+      });
+    }
+  },
+];

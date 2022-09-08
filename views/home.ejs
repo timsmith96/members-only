@@ -16,7 +16,7 @@
         <div class="message-info">
           <p class="posted-by">
             Posted by: <% if(user) {%>
-            <span><%=message.createdBy.username%></span>
+            <span class="posted-by-span"><%=message.createdBy.username%></span>
             <%} else { %>
             <a href="/login">log in for details</a>
             <%}%>
@@ -30,7 +30,9 @@
           </p>
         </div>
       </div>
-      <%})%>
+      <%})%> <% if(user) { %>
+      <a href="/admin">To try to become an admin, click here</a>
+      <%}%>
     </main>
   </body>
 </html>
