@@ -10,6 +10,7 @@ exports.create_user_post = [
   body('username').custom((value) => {
     return User.findOne({ username: value }).then((user) => {
       if (user) {
+        console.log('hi');
         return Promise.reject('Username already in use');
       }
     });
@@ -37,11 +38,11 @@ exports.create_user_post = [
       });
 
       if (!errors.isEmpty()) {
-        console.log(errors.array());
         res.render('index', {
           firstname: req.body.firstname,
           errors: errors.array(),
           title: 'Sign up',
+          user: req.user,
         });
       } else {
         user.save((err) => {

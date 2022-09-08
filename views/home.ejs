@@ -4,7 +4,33 @@
     <%- include('./partials/head'); %>
   </head>
   <header><%- include('./partials/header'); %></header>
-  <main>
-    <h1>home page</h1>
-  </main>
+  <body>
+    <main class="messages-container">
+      <% if(user) { %>
+      <a class="create-post" href="/create-message">Create post</a>
+      <%}%> <% messages.forEach(message => { %>
+      <div class="message">
+        <h2 class="message-title"><%=message.title%></h2>
+        <p class="message-text"><%=message.text%></p>
+        <hr />
+        <div class="message-info">
+          <p class="posted-by">
+            Posted by: <% if(user) {%>
+            <span><%=message.createdBy.username%></span>
+            <%} else { %>
+            <a href="/login">log in for details</a>
+            <%}%>
+          </p>
+          <p class="date">
+            Date: <% if(user) {%>
+            <span><%=message.niceDate%></span>
+            <%} else { %>
+            <a href="/login">log in for details</a>
+            <%}%>
+          </p>
+        </div>
+      </div>
+      <%})%>
+    </main>
+  </body>
 </html>

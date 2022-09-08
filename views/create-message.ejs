@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head'); %>
+  </head>
+  <header><%- include('./partials/header'); %></header>
+  <div class="body">
+    <% if(user) { %>
+    <div class="new-container">
+      <form method="POST" action="/create-message" class="form">
+        <h2>Create a new message</h2>
+        <div class="form-control">
+          <label for="title">Message title</label>
+          <input
+            type="text"
+            id="message-title"
+            name="message-title"
+            placeholder="Message title"
+          />
+          <% if(errors.some(err => err.param === 'message-title')) { %>
+          <small class="error"
+            ><%= errors.find(err => err.param === 'message-title').msg%></small
+          >
+          <% } %>
+        </div>
+        <div class="form-control">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Message"
+          ></textarea>
+          <% if(errors.some(err => err.param === 'message')) { %>
+          <small class="error"
+            ><%= errors.find(err => err.param === 'message').msg%></small
+          >
+          <% } %>
+        </div>
+        <button>Submit message</button>
+      </form>
+    </div>
+  </div>
+  <%} else {%>
+  <h1>Oopla! You need to be <a href="/login">logged in</a> to do that.</h1>
+  <%}%>
+</html>
